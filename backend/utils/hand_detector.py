@@ -69,6 +69,22 @@ class HandDetector:
         Squashes [[x,y,z], [x,y,z], ...] into [x,y,z,x,y,z,...]
         63 numbers total — what the classifier will expect later.
         """
-        return [coord for point in landmarks for coord in point]
+        return [coord for point in landmarks for coord in point]#another ay of writing for point in landmarks for coord in point return coord 
+    
+    def normalize_landmarks(self, landmarks):
+        # wrist is always point 0
+        wrist_x = landmarks[0][0]
+        wrist_y = landmarks[0][1]
+        wrist_z = landmarks[0][2]
+
+        # make every point relative to the wrist
+        normalized = []
+        for point in landmarks:
+            normalized.append([
+                point[0] - wrist_x,
+                point[1] - wrist_y,
+                point[2] - wrist_z
+            ])
+        return normalized
         
 
